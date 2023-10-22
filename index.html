@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <title>Asynchronous Equation Solver</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            font-size: 32px;
+            color: black;
+            font-weight: bolder;
+            text-align: center;
+            background-color: rgb(241, 241, 49);
+            padding: 20px;
+        }
+        .container {
+            background-color: rgb(162, 228, 32);
+            padding: 20px;
+            text-align: center;
+        }
+        .description {
+            color: black;
+            width: 700px;
+            text-align: left;
+        }
+        .image {
+            float: right;
+            margin-right: 20px;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        .button {
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button button:hover {
+            background-color: #0056b3;
+        }
+        .image img {
+            max-width: 100%;
+        }
+        .container-description {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .container-description .description {
+            flex: 1;
+            width: 50%;
+        }
+        .container-description .image {
+            flex: 1;
+            width: 50%;
+        }
+        .result {
+            color: black;
+            background-color: rgb(241, 241, 49);;
+            display: flex;
+            justify-content: left;
+            padding: 15px;
+        }
+        .result h1{
+            margin-left: 20 px;
+        }
+        .ans{
+            display: block;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">Asynchronous Equation Solver</div>
+    <div class="container">
+        <div class="container-description">
+            <div class="description">
+                <h1>How Equation Works?</h1>
+                <p>
+                   <b> Resultant of Forces Calculation:</b><br>Let's assume you have two forces F1 and F2 acting on an object at an angle θ.<br>
+                    <b>Data Input:</b><br>
+                    Asynchronously input the values of F1, F2, and θ.<br>
+
+                    <b>Force Decomposition</b>:<br>
+                    Asynchronously calculate the horizontal and vertical components of F1 and F2:
+
+                    F1x = F1 * cos(θ)
+                    F1y = F1 * sin(θ)
+                    F2x = F2 * cos(θ)
+                    F2y = F2 * sin(θ)<br>
+                    <b>Resultant Horizontal and Vertical Components:</b><br>
+                    Asynchronously calculate the resultant horizontal and vertical components:
+
+                    Rx = F1x + F2x
+                    Ry = F1y + F2y<br>
+                    <b>Resultant Force Magnitude:</b><br>
+                    Asynchronously calculate the magnitude of the resultant force using the Pythagorean theorem:
+
+                    R = sqrt(Rx^2 + Ry^2)<br>
+                    <b>Resultant Angle Calculation:</b><br>
+                    Asynchronously calculate the angle α using trigonometry:
+
+                    α = atan(Ry / Rx)<br>
+                   <b> Return Results:</b><br>
+                    Return the values of R and α to the client function.  
+                </p>
+                <h2>Click On Calculate To Perform Calculation</h2>
+                <div class="button">
+                    <button id="calculateButton">Calculate</button>
+                </div>
+            </div>
+            <div class="image">
+                <img src="image.JPG" alt="Force Illustration" width="500px" />
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        document.getElementById("calculateButton").addEventListener("click", function () {
+            async function calculateResultant(F1, F2, theta) {
+                const F1x = F1 * Math.cos(theta);
+                const F1y = F1 * Math.sin(theta);
+                const F2x = F2 * Math.cos(theta);
+                const F2y = F2 * Math.sin(theta);
+                const Rx = F1x + F2x;
+                const Ry = F1y + F2y;
+                const R = Math.sqrt(Math.pow(Rx, 2) + Math.pow(Ry, 2));
+                const alpha = Math.atan(Ry / Rx);
+                return { R, alpha };
+            }
+
+            const F1 = parseFloat(prompt("Enter value of F1"));
+            const F2 = parseFloat(prompt("Enter value of F2"));
+            const theta = parseFloat(prompt("Enter the angle in radians"));
+            calculateResultant(F1, F2, theta).then(result => {
+                $(document).ready(function() {
+                    $("#001").html(`<b>F1</b> = ${F1} <br> <b>F2 =</b> ${F2} <br> <b>θ =</b> ${theta}`);
+                    $("#002").html(`<b>Resultant Force (R)</b> = ${result.R}`);
+                    $("#003").html(`<b>Resultant Angle (α)</b> = ${result.alpha}`);
+                });
+            });
+        });
+    </script>
+    <div class="result">
+        <h1>The Results Are : </h1>
+        <div class="ans">
+        <div id="001"> </div>
+        <div id="002"> </div>
+        <div id="003"> </div>
+        </div>
+    </div>
+</body>
+</html>
